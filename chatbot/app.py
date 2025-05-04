@@ -1,10 +1,15 @@
 import streamlit as st
 import pandas as pd
+import os
 
 # Load data
 @st.cache_data
 def load_data():
-    df = pd.read_csv("traveldetail.csv")
+    file_path = "traveldetail.csv"
+    if not os.path.exists(file_path):
+        st.error(f"❌ File `{file_path}` not found. Please make sure it is in the same directory as `app.py`.")
+        st.stop()
+    df = pd.read_csv(file_path)
     df.columns = df.columns.str.strip()
     return df
 
